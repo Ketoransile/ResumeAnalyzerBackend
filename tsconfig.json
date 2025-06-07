@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2021",
+    "module": "commonjs",
+    "lib": ["es2021"],
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types", "./types"], // Ensure this line exists and is correct
+    "types": ["node", "express", "multer"]
+  },
+  "include": [
+    "**/*.ts", // This includes all .ts files in the root and any subdirectories
+    "types/**/*.d.ts" // This is crucial for picking up your custom declaration file
+  ],
+  "exclude": ["node_modules"]
+}
