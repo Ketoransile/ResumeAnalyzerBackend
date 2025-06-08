@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { clerkMiddleware, requireAuth } from "@clerk/express";
-import resumeRoute from "./routes/resume";
+import resumeRoute from "./routes/ResumeAnalysis";
 import authRoute from "./routes/User";
 import { errorHandler } from "./middlewares/errorMiddleware";
 

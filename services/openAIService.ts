@@ -18,27 +18,52 @@ export async function getAnalysisFromOpenAI(
 
   const client = ModelClient(endpoint, new AzureKeyCredential(token));
 
-  const prompt = `As an expert HR Analyst specializing in recruitment and AI-driven candidate assessment, your objective is to meticulously evaluate a provided resume against a given job description. Your analysis must be comprehensive, insightful, and actionable, designed to equip the candidate with precise feedback for optimizing their application.
+  //   const prompt = `As an expert HR Analyst specializing in recruitment and AI-driven candidate assessment, your objective is to meticulously evaluate a provided resume against a given job description. Your analysis must be comprehensive, insightful, and actionable, designed to equip the candidate with precise feedback for optimizing their application.
 
-**Resume:**
+  // **Resume:**
+  // ${resumeText}
+
+  // **Job Description:**
+  // ${jobDescription}
+
+  // Deliver your analysis in a structured JSON object with the following specific keys and their corresponding value types. Adhere strictly to the JSON format.
+
+  // {
+  //   "overall_fit_score": number, // Percentage (0-100) indicating the strategic alignment with the job requirements.
+  //   "core_competencies_matched": string[], // List of essential skills/competencies explicitly found in the resume matching the job description.
+  //   "gaps_in_qualifications": string[], // Key requirements or preferred qualifications from the job description not evident in the resume.
+  //   "resume_enhancements": string[], // Specific, actionable recommendations to tailor the resume more effectively for this role, including phrasing, data points, or structural changes.
+  //   "tailored_profile_summary": string, // A compelling 3-4 sentence professional summary, extracted from the resume and optimized for this specific job description's context.
+  //   "potential_interview_questions": string[], // 2-3 behavioral or technical questions derived from any gaps or areas needing clarification in the resume relative to the JD.
+  //   "red_flags_or_concerns": string[] // (Optional) Any potential red flags (e.g., unexplained gaps, inconsistent roles, overly generic statements) that an HR manager might notice. Return an empty array if none.
+  // }
+  // `;
+  const prompt = `As a highly meticulous and unbiased **AI-powered HR Analyst and resume optimization expert**, your primary objective is to conduct a thorough and objective evaluation of a given candidate's resume against a specific job description. Your analysis must be **data-driven, actionable, and strictly adhere to the requested JSON output format**. Provide insights that empower the candidate to significantly enhance their application for this particular role.
+
+---
+**Candidate's Resume Text:**
 ${resumeText}
 
-**Job Description:**
+---
+**Target Job Description Text:**
 ${jobDescription}
 
-Deliver your analysis in a structured JSON object with the following specific keys and their corresponding value types. Adhere strictly to the JSON format.
+---
+**Instructions for Analysis and JSON Output:**
+
+Generate a JSON object with the following keys and strictly adhere to their specified data types. Ensure the output is *only* the JSON object, without any preamble, conversational text, or markdown formatting outside the JSON block. If a specific data point is not applicable or cannot be determined (e.g., no red flags), return an **empty array** for lists or 'null' for a single value (e.g., if a score cannot be accurately determined due to insufficient input).
 
 {
-  "overall_fit_score": number, // Percentage (0-100) indicating the strategic alignment with the job requirements.
-  "core_competencies_matched": string[], // List of essential skills/competencies explicitly found in the resume matching the job description.
-  "gaps_in_qualifications": string[], // Key requirements or preferred qualifications from the job description not evident in the resume.
-  "resume_enhancements": string[], // Specific, actionable recommendations to tailor the resume more effectively for this role, including phrasing, data points, or structural changes.
-  "tailored_profile_summary": string, // A compelling 3-4 sentence professional summary, extracted from the resume and optimized for this specific job description's context.
-  "potential_interview_questions": string[], // 2-3 behavioral or technical questions derived from any gaps or areas needing clarification in the resume relative to the JD.
-  "red_flags_or_concerns": string[] // (Optional) Any potential red flags (e.g., unexplained gaps, inconsistent roles, overly generic statements) that an HR manager might notice. Return an empty array if none.
-}
-`;
-
+  "overall_fit_score": number, // A comprehensive percentage (0-100) indicating the strategic alignment of the entire resume with the job's core requirements.
+  "keyword_match_score": number, // A percentage (0-100) reflecting how many key terms, technologies, and specific skills explicitly mentioned in the job description are present in the resume. This is a direct keyword count.
+  "experience_relevance_score": number, // A percentage (0-100) evaluating how well the candidate's work history (e.g., years of experience, types of roles, industries, achievements) directly aligns with the experience requirements stated in the job description.
+  "top_matching_skills": string[], // List 5-7 most relevant hard and soft skills directly found in the resume that strongly align with the job description.
+  "key_qualification_gaps": string[], // Identify 3-5 critical requirements (skills, experience, qualifications) from the job description that are noticeably absent or poorly highlighted in the resume.
+  "actionable_enhancements": string[], // Provide 3-5 highly specific, actionable recommendations for improving the resume's content, phrasing, and structure to better target this job. Include examples where beneficial. Focus solely on resume content, not general career advice.
+  "tailored_summary_for_role": string, // A concise, professional summary (3-4 sentences) of the candidate, crafted specifically to highlight their suitability and key strengths for *this exact job description*.
+  "relevant_interview_questions": string[], // Formulate 2-3 targeted interview questions (mix of behavioral and technical) based on areas where the resume could be strengthened or where further clarification relative to the job description would be beneficial.
+  "potential_red_flags": string[] // List any 1-3 significant and demonstrable "red flags" or concerns (e.g., unexplained employment gaps > 6 months, inconsistent dates, overly generic statements without specific achievements) that an HR manager would likely identify. Return an empty array if no clear red flags are present.
+}`;
   try {
     const response = await client.path("/chat/completions").post({
       body: {

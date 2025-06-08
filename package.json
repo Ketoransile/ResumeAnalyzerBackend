@@ -16,6 +16,7 @@
     "@azure/core-auth": "^1.9.0",
     "@clerk/clerk-sdk-node": "^5.1.6",
     "@clerk/express": "^1.6.0",
+    "cloudinary": "^2.6.1",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",

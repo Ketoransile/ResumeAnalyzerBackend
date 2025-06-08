@@ -14,7 +14,7 @@ export const errorHandler = (
   if (err.name === "MulterError") {
     if (err.code === "LIMIT_FILE_SIZE") {
       statusCode = 413;
-      message: "File Too Large. Maximum size is 10MB";
+      message = "File Too Large. Maximum size is 10MB";
     } else if (err.code === "LIMIT_UNEXPECTED_FILE") {
       statusCode = 400;
       message = "Too many files uploaded or incorrect filed name";
