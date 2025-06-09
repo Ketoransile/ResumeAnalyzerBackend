@@ -182,10 +182,10 @@ export const analyzeResume = async (
       rawAIResponse: analysisResult,
     });
     const result = await newAnalysis.save();
-    console.log(
-      "Resume analysis and file URL saved to database for user:",
-      userId
-    );
+    // console.log(
+    //   "Resume analysis and file URL saved to database for user:",
+    //   userId
+    // );
     // console.log("Result value that saved to dataabase = ", result);
     res.json(result); // <-- DO NOT `return` this
   } catch (error: any) {
