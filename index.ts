@@ -8,7 +8,10 @@ import { errorHandler } from "./middlewares/errorMiddleware";
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://resume-analyzer-frontend-delta.vercel.app",
+];
 // middlewares
 app.use(clerkMiddleware());
 app.use(
