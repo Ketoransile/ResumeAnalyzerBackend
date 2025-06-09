@@ -9,6 +9,39 @@ import ResumeAnalysis from "../models/ResumeAnalysis";
 // interface MulterRequest extends Request {
 //   file?: Express.Multer.File;
 // }
+export const getAllAnalysis = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    await dbConnect();
+    const auth = getAuth(req);
+    const userId = auth.userId;
+    if (!userId) {
+      return next(new Error("Unauthorized: User ID not found"));
+    }
+    const allAnalysis = await ResumeAnalysis.find({ userId });
+    if (!allAnalysis || allAnalysis.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: "No resume analyses found",
+        data: [],
+      });
+      return;
+    }
+    console.log("ALl analysis from backend is ", allAnalysis);
+    res.status(200).json({
+      success: true,
+      message: "User Resume analyses fetched successfully",
+      data: allAnalysis,
+    });
+  } catch (error) {
+    console.error("Error occured while fetching user analyes", error);
+    next(error);
+  }
+};
+
 export const getSingleAnalysis = async (
   req: Request,
   res: Response,
@@ -37,7 +70,7 @@ export const getSingleAnalysis = async (
       );
     }
 
-    console.log("analysis from backend is ", analysis);
+    // console.log("analysis from backend is ", analysis);
     res.status(200).json(analysis);
   } catch (error) {
     next(error);
