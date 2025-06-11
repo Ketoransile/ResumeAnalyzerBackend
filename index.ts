@@ -5,6 +5,15 @@ import { clerkMiddleware, requireAuth } from "@clerk/express";
 import resumeRoute from "./routes/ResumeAnalysis";
 import authRoute from "./routes/User";
 import { errorHandler } from "./middlewares/errorMiddleware";
+import helmet from "helmet";
+import { rateLimit } from "express-rate-limit";
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+});
 
 const app = express();
 
@@ -12,6 +21,31 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://resume-analyzer-frontend-delta.vercel.app",
 ];
+
+// Security middlewares
+app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.clerk.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "https://images.clerk.dev",
+        "https://fonts.gstatic.com",
+      ],
+      connectSrc: ["'self'", "https://api.clerk.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      frameSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'"],
+    },
+  })
+);
+// Rate limiting middleware
+app.use(limiter);
 // middlewares
 app.use(clerkMiddleware());
 app.use(

@@ -1,4 +1,3 @@
-// File: types/express.d.ts
 declare global {
   namespace Express {
     interface Request {
@@ -15,4 +14,4 @@ declare global {
   }
 }
 
-export {}; // <-- Important to make the file a module and avoid redeclaration errors
+export {};
