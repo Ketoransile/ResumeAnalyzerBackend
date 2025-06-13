@@ -27,7 +27,7 @@ export const getAllAnalysis = async (
       });
       return;
     }
-    console.log("ALl analysis from backend is ", allAnalysis);
+    // console.log("ALl analysis from backend is ", allAnalysis);
     res.status(200).json({
       success: true,
       message: "User Resume analyses fetched successfully",

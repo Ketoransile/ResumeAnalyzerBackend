@@ -11,14 +11,14 @@ export const createUser = async (
 
     const { id } = evt.data;
     const eventType = evt.type;
-    console.log(
-      `Received webhook with ID ${id} and event type of ${eventType}`
-    );
-    console.log("Webhook payload:", evt.data);
+    // console.log(
+    //   `Received webhook with ID ${id} and event type of ${eventType}`
+    // );
+    // console.log("Webhook payload:", evt.data);
 
     if (evt.type === "user.created") {
       try {
-        console.log("userId:", evt.data.id);
+        // console.log("userId:", evt.data.id);
         await dbConnect();
         const { first_name, last_name, email_addresses, image_url } = evt.data;
         const email = email_addresses[0].email_address;
@@ -30,7 +30,7 @@ export const createUser = async (
           profileImageUrl: image_url || "",
         });
         const response = await user.save();
-        console.log("USer is created succesfully", response);
+        // console.log("USer is created succesfully", response);
       } catch (error) {
         console.error("Error creating user:", error);
         res.status(500).send("Error creating user");
