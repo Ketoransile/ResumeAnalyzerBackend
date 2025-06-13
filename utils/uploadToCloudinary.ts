@@ -14,7 +14,6 @@ export const uploadToCloudinary = (
       },
       (error, result) => {
         if (error) {
-          "Cloudinary upload error:", error;
           reject(new Error("Failed to upload resume to cloud storage."));
         } else if (!result?.secure_url) {
           reject(new Error("Cloudinary upload did not return a result URL."));
