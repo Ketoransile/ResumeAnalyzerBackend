@@ -46,6 +46,8 @@ app.use(
 );
 // Rate limiting middleware
 app.use(limiter);
+//Clerk webhook route
+app.use("/api/v1/auth", express.raw({ type: "application/json" }), authRoute);
 // middlewares
 app.use(clerkMiddleware());
 app.use(
@@ -61,7 +63,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 
-app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/resume", requireAuth(), resumeRoute);
 app.use("/api/v1/test", requireAuth(), (req, res) => {
   res.send("Hello WOrld");
