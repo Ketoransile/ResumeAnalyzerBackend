@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import { clerkMiddleware, requireAuth } from "@clerk/express";
 import resumeRoute from "./routes/ResumeAnalysis";
-import authRoute from "./routes/authRoute";
+import authRoute from "./routes/AuthRoute";
 import { errorHandler } from "./middlewares/errorMiddleware";
 import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
