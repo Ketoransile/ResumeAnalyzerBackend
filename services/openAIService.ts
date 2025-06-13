@@ -57,10 +57,6 @@ Generate a JSON object with the following keys and strictly adhere to their spec
     });
 
     if (isUnexpected(response)) {
-      console.error(
-        "Unexpected error from GitHub AI inference:",
-        response.body.error
-      );
       throw new Error(
         `GitHub AI inference error: ${
           response.body.error.message || "Unknown error"
@@ -71,7 +67,7 @@ Generate a JSON object with the following keys and strictly adhere to their spec
     const aiResponseContent = response.body.choices[0]?.message?.content;
 
     if (!aiResponseContent) {
-      console.error("AI response content is empty or null.");
+      ("AI response content is empty or null.");
       throw new Error("AI did not return content.");
     }
 
@@ -92,15 +88,9 @@ Generate a JSON object with the following keys and strictly adhere to their spec
       parsedResult = JSON.parse(jsonString);
       return parsedResult;
     } catch (jsonError: any) {
-      console.error(
-        "Failed to parse AI Response as JSON (full content was):",
-        aiResponseContent
-      );
-      console.error("JSON parsing error:", jsonError.message);
       throw new Error("AI returned an invalid JSON format.");
     }
   } catch (apiError) {
-    console.error("Error calling GitHub AI inference API:", apiError);
     throw apiError;
   }
 }

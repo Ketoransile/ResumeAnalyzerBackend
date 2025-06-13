@@ -34,7 +34,6 @@ export const getAllAnalysis = async (
       data: allAnalysis,
     });
   } catch (error) {
-    console.error("Error occured while fetching user analyes", error);
     next(error);
   }
 };

@@ -6,8 +6,6 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.error("Centralized Error Handler: ", err.message, err.stack);
-
   let statusCode = err.status || 500;
   let message = err.message || "An unexpected error occurred";
 
