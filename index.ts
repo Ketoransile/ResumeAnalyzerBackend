@@ -19,7 +19,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://resume-analyzer-frontend-delta.vercel.app",
+  "https://quantumcv.vercel.app",
 ];
 
 // Security middlewares
