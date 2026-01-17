@@ -57,11 +57,19 @@ Generate a JSON object with the following keys and strictly adhere to their spec
     });
 
     if (isUnexpected(response)) {
-      throw new Error(
-        `GitHub AI inference error: ${
-          response.body.error.message || "Unknown error"
-        }`
-      );
+      let errorMessage = "Unknown error";
+      if (
+        response.body &&
+        typeof response.body === "object" &&
+        "error" in response.body
+      ) {
+        const errorBody = response.body.error as any;
+        errorMessage = errorBody?.message || JSON.stringify(errorBody);
+      } else if (response.body) {
+        errorMessage = JSON.stringify(response.body)
+      }
+
+      throw new Error(`GitHub AI inference error: ${errorMessage}`);
     }
 
     const aiResponseContent = response.body.choices[0]?.message?.content;

@@ -6,6 +6,8 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  console.error("🔥 Error caught in middleware:", err); // Log the full error
+
   let statusCode = err.status || 500;
   let message = err.message || "An unexpected error occurred";
 
