@@ -21,6 +21,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
   "https://quantumcv.vercel.app",
+  "https://elevatcv.vercel.app",
 ];
 
 // Security middlewares
