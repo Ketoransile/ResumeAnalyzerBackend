@@ -16,7 +16,6 @@ pids
 *.pid.lock
 
 # Environment variables
-.env
 .env.*.local
 
 # Dependency directories
@@ -30,7 +29,6 @@ build/
 coverage/
 
 # IDE/Editor directories and files
-.vscode/
 .idea/
 *.suo
 *.ntvs*
@@ -65,3 +63,8 @@ pids/
 
 # Others
 *.tgz
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
+branch_structure.json
+config.bat
