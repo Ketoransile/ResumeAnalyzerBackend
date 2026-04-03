@@ -20,8 +20,8 @@ export const getAllAnalysis = async (
     }
     const allAnalysis = await ResumeAnalysis.find({ userId });
     if (!allAnalysis || allAnalysis.length === 0) {
-      res.status(404).json({
-        success: false,
+      res.status(200).json({
+        success: true,
         message: "No resume analyses found",
         data: [],
       });
